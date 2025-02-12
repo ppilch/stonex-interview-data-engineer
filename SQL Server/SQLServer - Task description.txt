@@ -1,0 +1,55 @@
+Overview:
+Attached is customers.csv file containing data about customers with unique CustomerId column.
+Requirements are to import data from this file to Interview database.
+This should be achieved by using a SSIS package to extract, transform and load the data from the file to a new tables in SQL Server.
+Please take a look at SQLServer - Interview DB Setup.sql and SQLServer - OLAP.DimCountry.sql scripts which are prerequisities to start this task - these just need executing to create Interview database and OLAP.DimCountry table required for the task.
+The process should be rerunnable - i.e. if a new csv file is provided with the same name, columns and similar data, the import should work. It should also work when the same file is imported multiple times.
+
+Detailed requirements:
+A. Extract stage:
+A1. Craete a new table: Extract.Customers.
+A2. Column names should match column names from the csv file.
+A3. Column types should be picked up basing on the data in the file and are up to dev to decide.
+A4. Simply extract data from the file and insert to the table without any transformations.
+
+B. Transform stage:
+B1. Create a stored procedure to transform the data and move it from ExtractCustomer to Transform.Customers table.
+B2. Transform.Customers table should have the following columns:
+- Index - mapped from Extract.Customers
+- CustomerId - mapped from Extract.Customers
+- CustomerName - new column - concatenation of FirstName and LastName with a space in the middle.
+- Company - mapped from Extract.Customers
+- CountryKey - INT - link OLAP.DimCountry to get this column from there. Join on country name. Return -1 where there is no matching record.
+- Phone1 - mapped from Extract.Customers but when the value in the source doesn't start with a digit, + sign or ( sign - set it to 'Unknown'.
+- Phone2 - mapped from Extract.Customers but when the value in the source doesn't start with a digit, + sign or ( sign - set it to 'Unknown'.
+- Email - mapped from Extract.Customers
+- EmailDomain - domain part of the email (everything after @ sign)
+- SubscriptionDateKey - INT - Subscription Date in format YYYYMMDD
+B3. Skip records where both FirstName and LastName are missing.
+B4. In case a varchar value is missing for a column, replace with 'Unknown'. When INT values is missing, replace with -1.
+
+C. Load stage:
+C1. Create a new table: OLAP.DimCustomers
+C2. Include all columns from the transform table.
+C3. Add a new column CustomerKey which will be Primary Key. It should be identity column starting from 1 incrementeing by 1.
+C4. Add an extra row with CustomerKey = -1 and 'Unknown' values for VARCHAR and -1 for INT columns
+C5. Finally, create a stored procedure to load the data into the final dimension table: OLAP.DimCustomers
+C6. Insert a customer if it doesn't exist in the target table yet and update if it exists and some of the values has changed.
+
+D. SSIS Package
+D1. Create a SSIS Package which will be responsible for running the extract, transform and load processes in the correct order.
+D2. Parameterize connection string to the .csv file and the Interview database.
+
+E. Expected results:
+E1. We expect a .dtsx file (SSIS package) to be pushed to github together with any .sql files created: three separate .sql files for each table and three separate .sql files for each notebook + any extra files if more were needed.
+
+Scoring criteria:
+We will evaluate the results within the following cirteria:
+- Reliability (no bugs, re-runable)
+- Requirements (if all requirements are implemented)
+- Code quality (formatting, usefull comments, readability of the code)
+
+The reqirements are explained in details and hopefully complete, but in case of any questions which are not covered please use common sense and implement the easiest solution.
+Also, in case of any blocker you may encounter try to find a workaround or the best possible solution to solve this task.
+
+Good luck!

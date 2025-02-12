@@ -1,0 +1,52 @@
+Overview:
+Attached is customers.csv file containing data about customers with unique CustomerId column.
+Requirements are to import data from this file to Interview catalog.
+This should be achieved by creating a connection to the .csv file and then extract, transform and load the data from the file to a new tables in the Interview catalog.
+Please take a look at Spark - Create Interview Catalog and Spark - Gold.DimCountry notebooks which are prerequisities to start this task - these just need executing to create Interview catalog and Gold.DimCountry table required for the task.
+The process should be rerunnable - i.e. if a new csv file is provided with the same name, columns and similar data, the import should work. It should also work when the same file is imported multiple times.
+
+Detailed requirements:
+A. Bronze stage:
+A1. Craete a new table: Bronze.Customers.
+A2. Column names should match column names from the csv file.
+A3. Column types should be picked up basing on the data in the file and are up to dev to decide.
+A4. Simply extract data from the file and insert to the table without any transformations.
+
+B. Silver stage:
+B1. Create a notebook to transform the data and move it from Bronze.Customer to Silver.Customers table.
+B2. Silver.Customers table should have the following columns:
+- Index - mapped from Bronze.Customers
+- CustomerId - mapped from Bronze.Customers
+- CustomerName - new column - concatenation of FirstName and LastName with a space in the middle.
+- Company - mapped from Bronze.Customers
+- CountryKey - INT - link OLAP.DimCountry to get this column from there. Join on country name. Return -1 where there is no matching record.
+- Phone1 - mapped from Bronze.Customers but when the value in the source doesn't start with a digit, + sign or ( sign - set it to 'Unknown'.
+- Phone2 - mapped from Bronze.Customers but when the value in the source doesn't start with a digit, + sign or ( sign - set it to 'Unknown'.
+- Email - mapped from Bronze.Customers
+- EmailDomain - domain part of the email (everything after @ sign)
+- SubscriptionDateKey - INT - Subscription Date in format YYYYMMDD
+B3. Skip records where both FirstName and LastName are missing.
+B4. In case a varchar value is missing for a column, replace with 'Unknown'. When INT values is missing, replace with -1.
+
+C. Load stage:
+C1. Create a new table: OLAP.DimCustomers
+C2. Include all columns from the transform table.
+C4. Finally, create a notebook to load the data into the final dimension table: OLAP.DimCustomers
+C5. Insert a customer if it doesn't exist in the target table yet and update if it exists and some of the values has changed.
+
+D. Job
+D1. Create a job which will be responsible for running the extract, transform and load processes in the correct order.
+
+E. Expected results:
+E1. We expect a notebooks pushed to github together with json definition of the job + any extra files if more were needed.
+
+Scoring criteria:
+We will evaluate the results within the following cirteria:
+- Reliability (no bugs, re-runable)
+- Requirements (if all requirements are implemented)
+- Code quality (formatting, usefull comments, readability of the code)
+
+The reqirements are explained in details and hopefully complete, but in case of any questions which are not covered please use common sense and implement the easiest solution.
+Also, in case of any blocker you may encounter try to find a workaround or the best possible solution to solve this task.
+
+Good luck!
