@@ -7,7 +7,7 @@ The process should be rerunnable - i.e. if a new csv file is provided with the s
 
 Detailed requirements:
 A. Extract stage:
-A1. Craete a new table: Extract.Customers.
+A1. Create a new table: Extract.Customers.
 A2. Column names should match column names from the csv file.
 A3. Column types should be picked up basing on the data in the file and are up to dev to decide.
 A4. Simply extract data from the file and insert to the table without any transformations.
@@ -42,6 +42,7 @@ D2. Parameterize connection string to the .csv file and the Interview database.
 
 E. Expected results:
 E1. We expect a .dtsx file (SSIS package) to be pushed to github together with any .sql files created: three separate .sql files for each table and three separate .sql files for each notebook + any extra files if more were needed.
+E2. Just create a new branch in git (your name.initial_of_surname, e.g. John.S) and a new subfolder under Solution folder (your name.initial_of_surname). Add all files in your solution to this folder and push to github. Don't merge anything to master, just leave in your branch.
 
 Scoring criteria:
 We will evaluate the results within the following cirteria:
