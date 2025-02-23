@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="localhost.Interview"
+  DTS:DTSID="{6D910077-A84A-40DD-B27D-D41639DEA08D}"
+  DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="ConnectionString">@[$Project::LocalhostInterview_ConnectionString]</DTS:PropertyExpression>
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=Interview;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Interview StoneX-{6D910077-A84A-40DD-B27D-D41639DEA08D}localhost.Interview;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
