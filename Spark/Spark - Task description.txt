@@ -29,17 +29,15 @@ B3. Skip records where both FirstName and LastName are missing.
 B4. In case a varchar value is missing for a column, replace with 'Unknown'. When INT values is missing, replace with -1.
 
 C. Load stage:
-C1. Create a new table: OLAP.DimCustomers
-C2. Include all columns from the transform table.
-C4. Finally, create a notebook to load the data into the final dimension table: OLAP.DimCustomers
+C1. Create a new table: Gold.DimCustomers
+C2. Include all columns from the Silver table.
+C4. Finally, create a notebook to load the data into the final dimension table: Gold.DimCustomers
 C5. Insert a customer if it doesn't exist in the target table yet and update if it exists and some of the values has changed.
 
-D. Job
-D1. Create a job which will be responsible for running the extract, transform and load processes in the correct order.
-
-E. Expected results:
-E1. We expect a notebooks pushed to github together with json definition of the job + any extra files if more were needed.
-E2. Just create a new branch in git (your name.initial_of_surname, e.g. John.S) and a new subfolder under Solution folder (your name.initial_of_surname). Add all files in your solution to this folder and push to github. Don't merge anything to master, just leave in your branch.
+D. Expected results:
+D1. We expect a notebooks pushed to github + any extra files if more were needed.
+D2. Just create a new branch in git (your name.initial_of_surname, e.g. John.S) and a new subfolder under Solution folder (your name.initial_of_surname). Add all files in your solution to this folder and push to github.
+!! Don't merge anything to master, just leave in your branch. !!
 
 Scoring criteria:
 We will evaluate the results within the following cirteria:
